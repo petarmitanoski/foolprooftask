@@ -1,0 +1,67 @@
+<div>
+    <p>View:</p>
+    <button (click)="toggleView(true)">All files</button>
+    <button (click)="toggleView(false)">By type</button>
+    <form *ngIf="showAllFiles" [formGroup]="contactForm"> 
+        <label for="firstname">Search:</label>
+        <input type="text" id="fileName" name="fileName" formControlName="fileName">
+    </form>
+</div>
+
+<table *ngIf="showAllFiles">
+    <tr>
+      <th>Title</th>
+      <th>Created by</th>      
+      <th>Created on</th>
+      <th>Modified by</th>
+      <th>Modified on</th>
+      <th>Type</th>
+    </tr>
+    <tr *ngFor="let file of filesFacade.filteredFiles$ | async">
+      <td>{{ file.title }}</td>
+      <td>{{ file.createdByUser }}</td>
+      <td>{{ file.creationDateTime | date : 'medium' }}</td>
+      <td>{{ file.modifiedByUser }}</td>
+      <td>{{ file.modifiedDateTime | date : 'medium' }}</td>
+      <td>{{ file.type | translateFileType }}</td>
+    </tr>
+</table>
+
+
+<table *ngIf="!showAllFiles">
+    <h2>Profile file types</h2>
+    <tr>
+      <th>Title</th>
+      <th>Created by</th>      
+      <th>Created on</th>
+      <th>Modified by</th>
+      <th>Modified on</th>
+      <th>Type</th>
+    </tr>
+    <tr *ngFor="let file of filesFacade.profileFiles$ | async">
+      <td>{{ file.title }}</td>
+      <td>{{ file.createdByUser }}</td>
+      <td>{{ file.creationDateTime | date : 'medium' }}</td>
+      <td>{{ file.modifiedByUser }}</td>
+      <td>{{ file.modifiedDateTime | date : 'medium' }}</td>
+      <td>{{ file.type | translateFileType }}</td>
+    </tr>
+    
+    <h2>Article file types</h2>
+    <tr>
+      <th>Title</th>
+      <th>Created by</th>      
+      <th>Created on</th>
+      <th>Modified by</th>
+      <th>Modified on</th>
+      <th>Type</th>
+    </tr>
+    <tr *ngFor="let file of filesFacade.articleFiles$ | async">
+      <td>{{ file.title }}</td>
+      <td>{{ file.createdByUser }}</td>
+      <td>{{ file.creationDateTime | date : 'medium' }}</td>
+      <td>{{ file.modifiedByUser }}</td>
+      <td>{{ file.modifiedDateTime | date : 'medium' }}</td>
+      <td>{{ file.type | translateFileType }}</td>
+    </tr>
+</table>
